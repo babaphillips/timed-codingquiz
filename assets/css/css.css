@@ -19,7 +19,13 @@ h4 {
 }
 
 h1 {
-  font-size: 5.4rem;
+  font-size: 7.4rem;
+  color: #333;
+  margin-bottom: 5rem;
+}
+
+#countDown {
+  font-size: 6.0rem;
   color: #333;
   margin-bottom: 5rem;
 }
@@ -42,14 +48,20 @@ h3 {
 
 /* utilities */
 
-.container {
+.container, .homecontainer {
   width: 100vw;
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   max-width: 80rem;
   margin: 0 auto;
+  padding: 2rem;
+}
+
+#home {
+  padding-top: 150px;
 }
 
 .container > * {
@@ -80,7 +92,7 @@ h3 {
 
 /* style buttons */
 
-.btn {
+.btn-start, .btn-scores {
     font-size: 1.8rem;
     padding: 1rem 0;
     width: 20rem;
@@ -122,8 +134,9 @@ h3 {
   color:white;
 }
 
-.choice-text {
+.choice-content {
   padding: 1.5rem;
+  width: 100%;
 }
 
 .choice-container:hover {
@@ -131,4 +144,12 @@ h3 {
     box-shadow: 0 0.4rem 1.4rem 0 #333;
     transform: translateY(-0.1rem);
     transition: transform 150ms;
+}
+
+.correct {
+  background-color: #33c054;
+}
+
+.incorrect {
+  background-color: rgb(231, 78, 78);
 }
