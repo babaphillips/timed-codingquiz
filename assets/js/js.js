@@ -1,21 +1,33 @@
+// const variables maintain constant values, they can only be accessed within the block they were declared (cannot be updated or re-declared)
 const question = document.getElementById("question");
 const choices = Array.from(document.getElementsByClassName("choice-content"));
+const max_questions = 10;
 const startBtn = document.getElementById("startBtn");
+const startingMinutes = 1.5;
+const startGame = () => {
+  questionCounter = 0;
+  score = 0;
+  availableQuestions = [...questions];
+  getNewQuestion();
+};
 
+// let is now preferred for variable declaration, can be updated within its scope but no re-declared within its scope
 let currentQuestion = {};
 let acceptingAnswers = true;
 let score = 0;
 let questionCounter = 0;
 let availableQuestions = [];
+let time = startingMinutes * 60;
+var interval = null;
 
-
+// quiz questions array
 let questions = [
   {
     question: "What does HTML stand for?",
-    choice1: "Hyper Trainer Marking Language",
+    choice1: "H Trainer Marking Language",
     choice2: "Hyper Text Marketing Language",
     choice3: "Hyper Text Markup Language",
-    choice4: "Hyper Text Markup Leveler",
+    choice4: "Home Text Markup Leveler",
     answer: 3,
   },
   {
@@ -98,27 +110,38 @@ let questions = [
   },
 ];
 
-// constants
-
 // when start quiz button is clicked, show questions that were hidden on game id
+startBtn.addEventListener("click", function (event) {
+  document.getElementById("game").style.display = "block";
+});
 
-startBtn.addEventListener("click", function(event) {
-  document.getElementById('game').style.display = "block";
+// timer countdown and starter when startBtn is clicked
+const countdownEl = document.getElementById("countDown");
+startBtn.addEventListener("click", () => {
+  interval = setInterval(updateCountdown, 1000);
+});
+
+// after startBtn is clicked it goes away
+startBtn.addEventListener("click", ()=> {
+  startBtn.style.display = 'none';
 })
 
-const max_questions = 10;
+function updateCountdown() {
+  const minutes = Math.floor(time / 60);
+  let seconds = time % 60;
 
+  seconds = seconds < 10 ? "0" + seconds : seconds;
 
-const startGame = () => {
-  questionCounter = 0;
-  score = 0;
-  availableQuestions = [...questions];
-  getNewQuestion();
-};
+  countdownEl.innerHTML = minutes + ":" + seconds;
+  time--;
+  time = time < 0 ? 0 : time;
+}
 
 getNewQuestion = () => {
   if (availableQuestions.length === 0 || questionCounter >= max_questions) {
-    window.alert("Game is over! You will be redirected to our High Scores page!");
+    window.alert(
+      "Game is over! You will be redirected to our High Scores page!"
+    );
     return window.location.assign("./highscore.html");
   }
   questionCounter++;
@@ -142,13 +165,7 @@ choices.forEach((choice) => {
     acceptingAnswers = false;
     const selectedChoice = e.target;
     const selectedAnswer = selectedChoice.dataset["number"];
-
-    const classToApply =
-      selectedAnswer == currentQuestion.answer ? "correct" : "incorrect";
-    console.log(classToApply);
-
-    selectedChoice.parentElement.classList.add(classToApply);
-    selectedChoice.parentElement.classList.remove(classToApply);
+    console.log(selectedAnswer == currentQuestion.answer);
 
     getNewQuestion();
   });
