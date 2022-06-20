@@ -122,9 +122,9 @@ startBtn.addEventListener("click", () => {
 });
 
 // after startBtn is clicked it goes away
-startBtn.addEventListener("click", ()=> {
-  startBtn.style.display = 'none';
-})
+startBtn.addEventListener("click", () => {
+  startBtn.style.display = "none";
+});
 
 function updateCountdown() {
   const minutes = Math.floor(time / 60);
@@ -139,6 +139,7 @@ function updateCountdown() {
 
 getNewQuestion = () => {
   if (availableQuestions.length === 0 || questionCounter >= max_questions) {
+    localStorage.setItem("mostRecentScore", score);
     window.alert(
       "Game is over! You will be redirected to our High Scores page!"
     );
@@ -171,7 +172,7 @@ choices.forEach((choice) => {
   });
 });
 
+// when wrong option is picked -10seconds are taken from timer
+function wrongAnswer() {}
+
 startGame();
-
-
-
