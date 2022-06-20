@@ -172,3 +172,6 @@ choices.forEach((choice) => {
 });
 
 startGame();
+
+
+

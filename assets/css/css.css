@@ -60,6 +60,16 @@ h3 {
   padding: 2rem;
 }
 
+.containerhighscore {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 80rem;
+  margin: 0 auto;
+  padding-top: 350px;
+}
+
 #home {
   padding-top: 150px;
 }
@@ -92,7 +102,7 @@ h3 {
 
 /* style buttons */
 
-.btn-start, .btn-scores {
+.btn-start, .btn-scores, .btn {
     font-size: 1.8rem;
     padding: 1rem 0;
     width: 20rem;
@@ -152,4 +162,27 @@ h3 {
 
 .incorrect {
   background-color: rgb(231, 78, 78);
+}
+
+
+/* highscore page */
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input {
+  margin-bottom: 1rem;
+  width: 20rem;
+  padding: 1.5rem;
+  font-size: 1.8rem;
+  border: none;;
+}
+
+input::placeholder {
+  color: #aaa;
+  text-align: center;
 }
