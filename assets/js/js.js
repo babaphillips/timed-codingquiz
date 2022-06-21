@@ -1,9 +1,12 @@
 // const variables maintain constant values, they can only be accessed within the block they were declared (cannot be updated or re-declared)
 const question = document.getElementById("question");
 const choices = Array.from(document.getElementsByClassName("choice-content"));
+const score_points = 10;
+const scoreText = document.querySelector("#score");
 const max_questions = 10;
 const startBtn = document.getElementById("startBtn");
 const startingMinutes = 1.5;
+
 const startGame = () => {
   questionCounter = 0;
   score = 0;
@@ -126,6 +129,7 @@ startBtn.addEventListener("click", () => {
   startBtn.style.display = "none";
 });
 
+// timer function on page
 function updateCountdown() {
   const minutes = Math.floor(time / 60);
   let seconds = time % 60;
@@ -159,6 +163,8 @@ getNewQuestion = () => {
   acceptingAnswers = true;
 };
 
+// if correct answer is selected, answer turns green
+// is incorrect, answer turns red
 choices.forEach((choice) => {
   choice.addEventListener("click", (e) => {
     if (!acceptingAnswers) return;
@@ -168,11 +174,28 @@ choices.forEach((choice) => {
     const selectedAnswer = selectedChoice.dataset["number"];
     console.log(selectedAnswer == currentQuestion.answer);
 
-    getNewQuestion();
+    let classToApply =
+      selectedAnswer == currentQuestion.answer ? "correct" : "incorrect";
+
+    if (classToApply === "correct") {
+      incrementScore(score_points);
+    }
+
+    selectedChoice.parentElement.classList.add(classToApply);
+
+    setTimeout(() => {
+      selectedChoice.parentElement.classList.remove(classToApply);
+      getNewQuestion();
+    }, 1000);
   });
 });
 
+// if select answer is correct, 10 points will be added to the score
+incrementScore = (num) => {
+  score += num;
+  scoreText.innerText = score;
+};
+
 // when wrong option is picked -10seconds are taken from timer
-function wrongAnswer() {}
 
 startGame();
