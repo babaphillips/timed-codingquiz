@@ -136,9 +136,10 @@ startBtn.addEventListener("click", () => {
 function quizEnd() {
   // stop timer
   clearInterval(interval);
+  localStorage.setItem("mostRecentScore", score);
   window.alert(
     "Time is over! You will be redirected to our High Scores page!"
-  )
+  );
   return window.location.assign("./highscore.html");
 }
 
