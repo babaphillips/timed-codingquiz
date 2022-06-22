@@ -208,7 +208,7 @@ incrementScore = (num) => {
 // when wrong option is picked -10seconds are taken from timer
 reduceTimer = (num) => {
   interval -= num;
-  countdownEl.innerText = startingMinutes - penalty;
+  countdownEl.innerText = time - penalty;
 }
 
 
