@@ -18,7 +18,6 @@
 <p>WHEN the game is over</p>
 <p>THEN I can save my initials and score</p>
 
-
 <h1>Mock-Up</h1>
 <img src="\assets\images\04-web-apis-homework-demo.gif">
 

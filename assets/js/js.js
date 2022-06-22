@@ -8,7 +8,7 @@ const startBtn = document.getElementById("startBtn");
 let startingMinutes = 1.5;
 let penalty = 0.1;
 
-// new game constant 
+// new game constant
 const startGame = () => {
   questionCounter = 0;
   score = 0;
@@ -24,7 +24,6 @@ let questionCounter = 0;
 let availableQuestions = [];
 let time = startingMinutes * 60;
 var interval = null;
-
 
 // quiz questions array
 let questions = [
@@ -137,9 +136,7 @@ function quizEnd() {
   // stop timer
   clearInterval(interval);
   localStorage.setItem("mostRecentScore", score);
-  window.alert(
-    "Time is over! You will be redirected to our High Scores page!"
-  );
+  window.alert("Time is over! You will be redirected to our High Scores page!");
   return window.location.assign("./highscore.html");
 }
 
@@ -154,13 +151,13 @@ function updateCountdown() {
   time--;
   time = time < 0 ? 0 : time;
 
-// if timer goes to 0 run quizEnd function 
+  // if timer goes to 0 run quizEnd function
   if (time <= 0) {
     quizEnd();
   }
 }
 
- // get new question function, if no more questions available redirect to high score page
+// get new question function, if no more questions available redirect to high score page
 getNewQuestion = () => {
   if (availableQuestions.length === 0 || questionCounter >= max_questions) {
     localStorage.setItem("mostRecentScore", score);
@@ -168,7 +165,7 @@ getNewQuestion = () => {
       "Game is over! You will be redirected to our High Scores page!"
     );
     return window.location.assign("./highscore.html");
-  } 
+  }
 
   questionCounter++;
   const questionIndex = Math.floor(Math.random() * availableQuestions.length);
@@ -192,19 +189,19 @@ choices.forEach((choice) => {
     acceptingAnswers = false;
     const selectedChoice = e.target;
     const selectedAnswer = selectedChoice.dataset["number"];
-    console.log(selectedAnswer == currentQuestion.answer);
 
     let classToApply =
       selectedAnswer == currentQuestion.answer ? "correct" : "incorrect";
 
-      // if correct answer is picked, 10 points will be added 
+    // if correct answer is picked, 10 points will be added
     if (classToApply === "correct") {
       incrementScore(score_points);
-// if incorrect answer is picked, -10 seconds on timer
+
+      // if incorrect answer is picked, -10 seconds on timer
     } else {
       reduceTimer(countdownEl);
     }
-    
+
     selectedChoice.parentElement.classList.add(classToApply);
 
     setTimeout(() => {
@@ -224,7 +221,6 @@ incrementScore = (num) => {
 reduceTimer = (num) => {
   startingMinutes -= num;
   countdownEl.innerText = time - penalty;
-}
-
+};
 
 startGame();
