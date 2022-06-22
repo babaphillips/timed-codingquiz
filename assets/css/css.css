@@ -207,3 +207,8 @@ input::placeholder {
 
 /* high scores list page */
 
+#highScoresList {
+  font-size: 2rem;
+  line-height: 5rem;
+  padding-bottom: 10rem;
+}

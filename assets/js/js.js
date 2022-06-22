@@ -132,6 +132,16 @@ startBtn.addEventListener("click", () => {
   startBtn.style.display = "none";
 });
 
+// when quizEnd function runs, it will stop timer and show a window prompt before going to the high scores page
+function quizEnd() {
+  // stop timer
+  clearInterval(interval);
+  window.alert(
+    "Time is over! You will be redirected to our High Scores page!"
+  )
+  return window.location.assign("./highscore.html");
+}
+
 // timer function on page
 function updateCountdown() {
   const minutes = Math.floor(time / 60);
@@ -142,6 +152,11 @@ function updateCountdown() {
   countdownEl.innerHTML = minutes + ":" + seconds;
   time--;
   time = time < 0 ? 0 : time;
+
+// if timer goes to 0 run quizEnd function 
+  if (time <= 0) {
+    quizEnd();
+  }
 }
 
  // get new question function, if no more questions available redirect to high score page
@@ -153,7 +168,6 @@ getNewQuestion = () => {
     );
     return window.location.assign("./highscore.html");
   } 
-  // if timer goes to 0 go back to highscores page
 
   questionCounter++;
   const questionIndex = Math.floor(Math.random() * availableQuestions.length);
@@ -207,7 +221,7 @@ incrementScore = (num) => {
 
 // when wrong option is picked -10seconds are taken from timer
 reduceTimer = (num) => {
-  interval -= num;
+  startingMinutes -= num;
   countdownEl.innerText = time - penalty;
 }
 
