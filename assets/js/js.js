@@ -1,32 +1,15 @@
-// const variables maintain constant values, they can only be accessed within the block they were declared (cannot be updated or re-declared)
-const question = document.getElementById("question");
-const choices = Array.from(document.getElementsByClassName("choice-content"));
-const score_points = 10;
-const scoreText = document.querySelector("#score");
-const max_questions = 10;
-const startBtn = document.getElementById("startBtn");
-let startingMinutes = 1.5;
-let penalty = 0.1;
+var question = document.getElementById("question");
+var choices = document.querySelectorAll(".choice-content");
+var score_points = 10;
+var scoreText = document.querySelector("#score");
+var startBtn = document.getElementById("startBtn");
+var acceptingAnswers = true;
+var score = 0;
+var time = 90;
+var interval;
 
-// new game constant
-const startGame = () => {
-  questionCounter = 0;
-  score = 0;
-  availableQuestions = [...questions];
-  getNewQuestion();
-};
-
-// let is now preferred for variable declaration, can be updated within its scope but no re-declared within its scope
-let currentQuestion = {};
-let acceptingAnswers = true;
-let score = 0;
-let questionCounter = 0;
-let availableQuestions = [];
-let time = startingMinutes * 60;
-var interval = null;
-
-// quiz questions array
-let questions = [
+//variable where questions will come from
+var questions = [
   {
     question: "What does HTML stand for?",
     choice1: "H Trainer Marking Language",
@@ -66,7 +49,7 @@ let questions = [
     choice1: "<title></title>",
     choice2: "<body></body>",
     choice3: "<head></head>",
-    choice4: "<br></br>",
+    choice4: "<br/>",
     answer: 4,
   },
   {
@@ -114,22 +97,92 @@ let questions = [
     answer: 2,
   },
 ];
+// in an array, the first element has index (position) 0, the second has index, 1... this variable will start from the first element in the variable questions
+var questionIndex = 0;
 
-// when start quiz button is clicked, show questions that were hidden on game id
-startBtn.addEventListener("click", function (event) {
-  document.getElementById("game").style.display = "block";
-});
+// timer countdown variable / accessed by the method getElementById, countDown is a id from index.html
+var countdownEl = document.getElementById("countDown");
 
-// timer countdown and starter when startBtn is clicked
-const countdownEl = document.getElementById("countDown");
-startBtn.addEventListener("click", () => {
+// function where the timer will start its countdown (-1s) and startBtn will disappear and question will be showed
+function start() {
   interval = setInterval(updateCountdown, 1000);
-});
 
-// after startBtn is clicked it goes away
-startBtn.addEventListener("click", () => {
   startBtn.style.display = "none";
-});
+  document.getElementById("game").style.display = "block";
+  getNewQuestion();
+}
+
+// function of timer in the page, 
+function updateCountdown() {
+  time--;
+  countdownEl.textContent = time;
+
+  // if timer goes to 0 run quizEnd function
+  if (time <= 0) {
+    quizEnd();
+  }
+}
+// get new question function, if no more questions available redirect to high score page
+function getNewQuestion() {
+  var currentQuestion = questions[questionIndex];
+
+  question.textContent = currentQuestion.question;
+
+  // availableQuestions.splice(questionIndex, 1);
+  acceptingAnswers = true;
+
+  choices.forEach((choice) => {
+    var number = choice.dataset["number"];
+    choice.textContent = currentQuestion["choice" + number];
+    choice.setAttribute("value", currentQuestion["choice" + number]);
+
+    choice.addEventListener("click", (e) => {
+      if (!acceptingAnswers) return;
+
+      acceptingAnswers = false;
+      var selectedChoice = e.target;
+
+      var selectedAnswer = selectedChoice.getAttribute("value");
+      console.log(selectedAnswer);
+      console.log(currentQuestion);
+
+      var classToApply;
+
+      if (selectedAnswer == currentQuestion.answer) {
+        classToApply = "correct";
+      } else {
+        classToApply = "incorrect";
+      }
+
+      questionIndex++;
+      // if correct answer is picked, 10 points will be added
+      if (classToApply === "correct") {
+        incrementScore(score_points);
+      } else {
+        // if incorrect answer is picked, -10 seconds on timer
+        time -= 10;
+        countdownEl.textContent = time;
+      }
+
+      selectedChoice.parentElement.classList.add(classToApply);
+
+      setTimeout(() => {
+        selectedChoice.parentElement.classList.remove(classToApply);
+      }, 500);
+    });
+    if (questions.length === questionIndex) {
+      quizEnd();
+    } else {
+      getNewQuestion();
+    }
+  });
+}
+
+// if select answer is correct, 10 points will be added to the score
+function incrementScore(num) {
+  score += num;
+  scoreText.innerText = score;
+}
 
 // when quizEnd function runs, it will stop timer and show a window prompt before going to the high scores page
 function quizEnd() {
@@ -140,87 +193,4 @@ function quizEnd() {
   return window.location.assign("./highscore.html");
 }
 
-// timer function on page
-function updateCountdown() {
-  const minutes = Math.floor(time / 60);
-  let seconds = time % 60;
-
-  seconds = seconds < 10 ? "0" + seconds : seconds;
-
-  countdownEl.innerHTML = minutes + ":" + seconds;
-  time--;
-  time = time < 0 ? 0 : time;
-
-  // if timer goes to 0 run quizEnd function
-  if (time <= 0) {
-    quizEnd();
-  }
-}
-
-// get new question function, if no more questions available redirect to high score page
-getNewQuestion = () => {
-  if (availableQuestions.length === 0 || questionCounter >= max_questions) {
-    localStorage.setItem("mostRecentScore", score);
-    window.alert(
-      "Game is over! You will be redirected to our High Scores page!"
-    );
-    return window.location.assign("./highscore.html");
-  }
-
-  questionCounter++;
-  const questionIndex = Math.floor(Math.random() * availableQuestions.length);
-  currentQuestion = availableQuestions[questionIndex];
-  question.innerText = currentQuestion.question;
-
-  choices.forEach((choice) => {
-    const number = choice.dataset["number"];
-    choice.innerText = currentQuestion["choice" + number];
-  });
-
-  availableQuestions.splice(questionIndex, 1);
-  acceptingAnswers = true;
-};
-
-//
-choices.forEach((choice) => {
-  choice.addEventListener("click", (e) => {
-    if (!acceptingAnswers) return;
-
-    acceptingAnswers = false;
-    const selectedChoice = e.target;
-    const selectedAnswer = selectedChoice.dataset["number"];
-
-    let classToApply =
-      selectedAnswer == currentQuestion.answer ? "correct" : "incorrect";
-
-    // if correct answer is picked, 10 points will be added
-    if (classToApply === "correct") {
-      incrementScore(score_points);
-
-      // if incorrect answer is picked, -10 seconds on timer
-    } else {
-      reduceTimer(countdownEl);
-    }
-
-    selectedChoice.parentElement.classList.add(classToApply);
-
-    setTimeout(() => {
-      selectedChoice.parentElement.classList.remove(classToApply);
-      getNewQuestion();
-    }, 1000);
-  });
-});
-
-// if select answer is correct, 10 points will be added to the score
-incrementScore = (num) => {
-  score += num;
-  scoreText.innerText = score;
-};
-
-// when wrong option is picked -10seconds are taken from timer
-reduceTimer = (num) => {
-  startingMinutes -= num;
-  countdownEl.innerText = time - penalty;
-};
-
-startGame();
+startBtn.addEventListener("click", start);
