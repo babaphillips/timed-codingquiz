@@ -8,7 +8,6 @@ var score = 0;
 var time = 90;
 var interval;
 
-//variable where questions will come from
 var questions = [
   {
     question: "What does HTML stand for?",
@@ -16,7 +15,7 @@ var questions = [
     choice2: "Hyper Text Marketing Language",
     choice3: "Hyper Text Markup Language",
     choice4: "Home Text Markup Leveler",
-    answer: 3,
+    answer: "Hyper Text Markup Language",
   },
   {
     question: "Inside which HTML element do we put the JavaScript??",
@@ -24,7 +23,7 @@ var questions = [
     choice2: "<javascript>",
     choice3: "<js>",
     choice4: "<scripting>",
-    answer: 1,
+    answer:  "<script>"
   },
   {
     question: "What tag is used to define an unordered list that is bulleted?",
@@ -32,7 +31,7 @@ var questions = [
     choice2: "<u>",
     choice3: "<s>",
     choice4: "<ul>",
-    answer: 4,
+    answer: "<ul>",
   },
   {
     question:
@@ -41,7 +40,7 @@ var questions = [
     choice2: "<body></body>",
     choice3: "<head></head>",
     choice4: "<title></title>",
-    answer: 3,
+    answer:  "<head></head>",
   },
   {
     question:
@@ -50,7 +49,7 @@ var questions = [
     choice2: "<body></body>",
     choice3: "<head></head>",
     choice4: "<br/>",
-    answer: 4,
+    answer:"<br/>",
   },
   {
     question:
@@ -59,7 +58,7 @@ var questions = [
     choice2: "<em></em>",
     choice3: "<blockquote></blockquote>",
     choice4: "<a></a>",
-    answer: 3,
+    answer: "<blockquote></blockquote>",
   },
   {
     question: "Where is the JavaScript placed inside an HTML document or page?",
@@ -67,7 +66,7 @@ var questions = [
     choice2: "In the <footer> section",
     choice3: "In the <body> and <head> sections",
     choice4: "In the <title> section",
-    answer: 1,
+    answer: "In the <meta> section",
   },
   {
     question:
@@ -76,7 +75,7 @@ var questions = [
     choice2: "Spacing",
     choice3: "Text-align",
     choice4: "Placement",
-    answer: 3,
+    answer:  "Text-align",
   },
   {
     question:
@@ -85,7 +84,7 @@ var questions = [
     choice2: "Link",
     choice3: "Body",
     choice4: "Footer",
-    answer: 2,
+    answer: "Link",
   },
   {
     question:
@@ -94,16 +93,14 @@ var questions = [
     choice2: "Margin",
     choice3: "Block-level",
     choice4: "Line",
-    answer: 2,
+    answer: "Margin",
   },
 ];
-// in an array, the first element has index (position) 0, the second has index, 1... this variable will start from the first element in the variable questions
 var questionIndex = 0;
 
-// timer countdown variable / accessed by the method getElementById, countDown is a id from index.html
+// timer countdown and starter when startBtn is clicked
 var countdownEl = document.getElementById("countDown");
 
-// function where the timer will start its countdown (-1s) and startBtn will disappear and question will be showed
 function start() {
   interval = setInterval(updateCountdown, 1000);
 
@@ -112,7 +109,7 @@ function start() {
   getNewQuestion();
 }
 
-// function of timer in the page, 
+// timer function on page
 function updateCountdown() {
   time--;
   countdownEl.textContent = time;
@@ -136,52 +133,57 @@ function getNewQuestion() {
     choice.textContent = currentQuestion["choice" + number];
     choice.setAttribute("value", currentQuestion["choice" + number]);
 
-    choice.addEventListener("click", (e) => {
-      if (!acceptingAnswers) return;
+    choice.onclick = checkAnswer;
 
-      acceptingAnswers = false;
-      var selectedChoice = e.target;
-
-      var selectedAnswer = selectedChoice.getAttribute("value");
-      console.log(selectedAnswer);
-      console.log(currentQuestion);
-
-      var classToApply;
-
-      if (selectedAnswer == currentQuestion.answer) {
-        classToApply = "correct";
-      } else {
-        classToApply = "incorrect";
-      }
-
-      questionIndex++;
-      // if correct answer is picked, 10 points will be added
-      if (classToApply === "correct") {
-        incrementScore(score_points);
-      } else {
-        // if incorrect answer is picked, -10 seconds on timer
-        time -= 10;
-        countdownEl.textContent = time;
-      }
-
-      selectedChoice.parentElement.classList.add(classToApply);
-
-      setTimeout(() => {
-        selectedChoice.parentElement.classList.remove(classToApply);
-      }, 500);
-    });
-    if (questions.length === questionIndex) {
-      quizEnd();
-    } else {
-      getNewQuestion();
-    }
   });
+}
+
+function checkAnswer(e) {
+  var currentQuestion = questions[questionIndex];
+  if (!acceptingAnswers) return;
+
+  acceptingAnswers = false;
+  var selectedChoice = e.target;
+
+  var selectedAnswer = selectedChoice.getAttribute("value");
+  console.log(selectedAnswer);
+  console.log(currentQuestion.answer);
+
+  var classToApply;
+
+  if (selectedAnswer == currentQuestion.answer) {
+    classToApply = "correct";
+  } else {
+    classToApply = "incorrect";
+  }
+
+  questionIndex++;
+  // if correct answer is picked, 10 points will be added
+  if (classToApply === "correct") {
+    incrementScore(score_points);
+  } else {
+    // if incorrect answer is picked, -10 seconds on timer
+    time -= 10;
+    countdownEl.textContent = time;
+  }
+
+  selectedChoice.parentElement.classList.add(classToApply);
+
+  setTimeout(function () {
+    selectedChoice.parentElement.classList.remove(classToApply);
+  }, 500);
+
+ if (questions.length === questionIndex) {
+    quizEnd();
+  } else {
+    getNewQuestion();
+  }
 }
 
 // if select answer is correct, 10 points will be added to the score
 function incrementScore(num) {
   score += num;
-  scoreText.innerText = score;
+  scoreText.textContent = score;
 }
 
 // when quizEnd function runs, it will stop timer and show a window prompt before going to the high scores page
