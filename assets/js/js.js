@@ -187,7 +187,7 @@ function quizEnd() {
   // stop timer
   clearInterval(interval);
   localStorage.setItem("mostRecentScore", score);
-  window.alert("Time is over! You will be redirected to our High Scores page!");
+  window.alert("Quiz is over! You will be redirected to submit your score!");
   return window.location.assign("./highscore.html");
 }
 
