@@ -11,7 +11,7 @@ var interval;
 var questions = [
   {
     question: "What does HTML stand for?",
-    choice1: "H Trainer Marking Language",
+    choice1: "Hyper Trainer Marking Language",
     choice2: "Hyper Text Marketing Language",
     choice3: "Hyper Text Markup Language",
     choice4: "Home Text Markup Leveler",
@@ -23,7 +23,7 @@ var questions = [
     choice2: "<javascript>",
     choice3: "<js>",
     choice4: "<scripting>",
-    answer:  "<script>"
+    answer: "<script>",
   },
   {
     question: "What tag is used to define an unordered list that is bulleted?",
@@ -40,7 +40,7 @@ var questions = [
     choice2: "<body></body>",
     choice3: "<head></head>",
     choice4: "<title></title>",
-    answer:  "<head></head>",
+    answer: "<head></head>",
   },
   {
     question:
@@ -49,7 +49,7 @@ var questions = [
     choice2: "<body></body>",
     choice3: "<head></head>",
     choice4: "<br/>",
-    answer:"<br/>",
+    answer: "<br/>",
   },
   {
     question:
@@ -75,7 +75,7 @@ var questions = [
     choice2: "Spacing",
     choice3: "Text-align",
     choice4: "Placement",
-    answer:  "Text-align",
+    answer: "Text-align",
   },
   {
     question:
@@ -125,7 +125,6 @@ function getNewQuestion() {
 
   question.textContent = currentQuestion.question;
 
-  // availableQuestions.splice(questionIndex, 1);
   acceptingAnswers = true;
 
   choices.forEach((choice) => {
@@ -134,7 +133,6 @@ function getNewQuestion() {
     choice.setAttribute("value", currentQuestion["choice" + number]);
 
     choice.onclick = checkAnswer;
-
   });
 }
 
@@ -146,8 +144,6 @@ function checkAnswer(e) {
   var selectedChoice = e.target;
 
   var selectedAnswer = selectedChoice.getAttribute("value");
-  console.log(selectedAnswer);
-  console.log(currentQuestion.answer);
 
   var classToApply;
 
@@ -173,7 +169,7 @@ function checkAnswer(e) {
     selectedChoice.parentElement.classList.remove(classToApply);
   }, 500);
 
- if (questions.length === questionIndex) {
+  if (questions.length === questionIndex) {
     quizEnd();
   } else {
     getNewQuestion();
