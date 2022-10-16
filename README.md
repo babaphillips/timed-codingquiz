@@ -36,7 +36,8 @@ This application can be used by anybody who is willing to take a timed coding qu
 
 ## Visuals
 
-![MockUp](assets/images/04-web-apis-homework-demo.gif)
+![MockUp](assets/images/main.png)
+![MockUp2](assets/images/liveapp.png)
 
 ## License
 
