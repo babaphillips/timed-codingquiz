@@ -59,7 +59,7 @@ No tests.
 
 ## Questions?
 
-Check the GitHub repository here: [GitHub](https://github.com/babaphillips/password-generator)
+Check the GitHub repository here: [GitHub](https://github.com/babaphillips/timed-codingquiz)
 
 Check out my other projects at my Github here: [Github](https://github.com/babaphillips)
 
