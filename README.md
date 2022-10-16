@@ -1,30 +1,65 @@
-# timed-codingquiz
+# Timed Coding Quiz
 
-<h1>User Story</h1>
-<p>AS A coding boot camp student</p>
-<p>I WANT to take a timed quiz on JavaScript fundamentals that stores high scores</p>
-<p>SO THAT I can gauge my progress compared to my peers</p>
+![License](https://img.shields.io/badge/License-MIT-lightblue.svg)
 
-<h1>Acceptance Criteria</h1>
-<p>GIVEN I am taking a code quiz</p>
-<p>WHEN I click the start button</p>
-<p>THEN a timer starts and I am presented with a question</p>
-<p>WHEN I answer a question</p>
-<p>THEN I am presented with another question</p>
-<p>WHEN I answer a question incorrectly</p>
-<p>THEN time is subtracted from the clock</p>
-<p>WHEN all questions are answered or the timer reaches 0</p>
-<p>THEN the game is over</p>
-<p>WHEN the game is over</p>
-<p>THEN I can save my initials and score</p>
+## Build with:
 
-<h1>Mock-Up</h1>
-<img src="\assets\images\04-web-apis-homework-demo.gif">
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 
-<h1>Published Site:</h1>
+## Description:
 
-<p>https://babaphillips.github.io/timed-codingquiz/</p>
+An application that creates a timed coding quiz with Javascript fundamentals.
 
-<h1>GitHub Link:</h1>
+## Contents
 
-<p>https://github.com/babaphillips/timed-codingquiz</p>
+- [Installation](#installation)
+- [Usage](#usage)
+- [Visuals](#visuals)
+- [License](#license)
+- [Contributing](#contributing)
+- [Tests](#tests)
+- [Questions](#questions)
+
+## Installation
+
+1. Clone the repo
+   ```sh
+   git clone git@github.com:babaphillips/timed-codingquiz.git
+   ```
+2. Run application thru Go Live Extension.
+
+## Usage
+
+This application can be used by anybody who is willing to take a timed coding quiz.
+
+## Visuals
+
+![MockUp](assets/images/04-web-apis-homework-demo.gif)
+
+## License
+
+This application is licensed under the MIT license.
+
+## Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are welcome. If you have a suggestion that would make this better, please fork the repo and create a pull request.
+
+1. Fork the Project.
+2. Create your Feature Branch (`git checkout -b feature/NewFeature`).
+3. Commit your Changes (`git commit -m 'Add some NewFeature'`).
+4. Push to the Branch (`git push origin feature/New`).
+5. Open a Pull Request.
+
+## Tests
+
+No tests.
+
+## Questions?
+
+Check the GitHub repository here: [GitHub](https://github.com/babaphillips/password-generator)
+
+Check out my other projects at my Github here: [Github](https://github.com/babaphillips)
+
+How To Reach Me For Additional Questions: amandavphillips@icloud.com
